@@ -9,6 +9,8 @@ const express = require('express');
 const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
 
+const chaptersRouter = require('./routes/chapters');
+const comicsRouter = require('./routes/comics');
 const messagesRouter = require('./routes/messages');
 
 const app = express();
@@ -24,6 +26,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(logger('dev'));
 
+app.use('/chapters', chaptersRouter);
+app.use('/comics', comicsRouter);
 app.use('/messages', messagesRouter);
 
 // catch 404 and forward to error handler
