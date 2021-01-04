@@ -21,7 +21,6 @@ module.exports = function init(server) {
 
   io.on('connection', (socket) => {
     // eslint-disable-next-line no-console
-    console.debug('user connected');
     socket.on('message', (message) => handleMessage(io, message));
   });
 };

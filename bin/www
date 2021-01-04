@@ -5,9 +5,16 @@
  * Module dependencies.
  */
 const http = require('http');
+const https = require('https');
+const fs = require('fs');
+const path = require('path');
 const socketio = require('./socketio');
 const sequelize = require('./sequelize');
 const app = require('../app');
+
+const env = process.env.NODE_ENV || 'development';
+// eslint-disable-next-line import/no-dynamic-require
+const config = require(`${__dirname}/../config/config.json`)[env];
 
 /**
  * Normalize a port into a number, string, or false.
@@ -34,7 +41,7 @@ function normalizePort(val) {
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || '3002');
+const port = normalizePort(config.app_port || '3002');
 app.set('port', port);
 
 /**
@@ -69,7 +76,25 @@ function onError(error) {
  * Create HTTP server.
  */
 
-const server = http.createServer(app);
+let server = null;
+if (process.env.NODE_ENV) {
+  server = https.createServer({
+    key: fs.readFileSync(
+      path.resolve(
+        config.ssl_key_path,
+        config.ssl_key,
+      ),
+    ),
+    cert: fs.readFileSync(
+      path.resolve(
+        config.ssl_cert_path,
+        config.ssl_cert,
+      ),
+    ),
+  }, app);
+} else {
+  server = http.createServer(app);
+}
 
 /**
  * Event listener for HTTP server "listening" event.

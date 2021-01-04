@@ -2,4 +2,4 @@
 
 set -euf -o pipefail
 
-NODE_ENV=production PORT=30002 node bin/www > /dev/null &
+NODE_ENV=production node bin/www > /dev/null &
