@@ -11,7 +11,7 @@ module.exports = {
     database: process.env.FORUM_DB_DATABASE,
     host: process.env.FORUM_DB_HOST,
     dialect: process.env.FORUM_DB_DIALECT,
-    app_port: 3002,
+    app_port: process.env.PORT,
   },
   test: {
     username: process.env.FORUM_DB_USERNAME,
@@ -19,7 +19,7 @@ module.exports = {
     database: process.env.FORUM_DB_DATABASE,
     host: process.env.FORUM_DB_HOST,
     dialect: process.env.FORUM_DB_DIALECT,
-    app_port: 3002,
+    app_port: process.env.PORT,
   },
   production: {
     username: process.env.FORUM_DB_USERNAME,
